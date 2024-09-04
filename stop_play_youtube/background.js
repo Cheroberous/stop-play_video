@@ -79,6 +79,14 @@ chrome.tabs.onUpdated.addListener((tabId, tab) =>{
         );     
     
     }
+    else if(tab.url!=undefined){
+        let id_str = (tabId).toString();
+
+        delete dictionary1[id_str];                                           
+    
+        console.log("dizionario dopo: ",dictionary1);
+
+    }
 
 });
 
