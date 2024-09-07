@@ -1,50 +1,113 @@
 
 
 
-//watch
-const match_video="https:\/\/www\.youtube\.com\/watch[a-zA-Z0-9]*";          // valuta se parsare identificativo video
+
+
+
+
+
+
+
+
+
+const match_video="https:\/\/www\.youtube\.com\/watch[a-zA-Z0-9]*";          
 var attiva="";
 const debug=0;
 
-//console.log("background richiamato da zero");
 
-var dictionary={};
+
+
 var dictionary1={};
 
+var dictionary={var: "unico elemento"};
+var metti_in_storage=JSON.stringify(dictionary1)
 
-/*{
-    dst: "bg",
-    info: titolo_video,
-    page_id: my_id
-}*/
+
+
+
+
+chrome.storage.session.get(null, function(items) {
+
+
+    if(items!=null){
+        var allKeys = Object.keys(items);
+
+        if(allKeys.length==0){
+            
+            chrome.storage.session.set({"myDictionary": metti_in_storage}).then( () => {
+
+           
+            });
+        }
+        else{
+            chrome.storage.session.get(["myDictionary"]).then( (result) => {
+
+            let dic_risistemato= JSON.parse(result.myDictionary)
+
+            dictionary1=dic_risistemato;
+
+        
+            
+                
+        }); 
+
+        }
+
+
+    }
+
+
+});
+
+
+
+
+
+async function handle_storage(id_tab,video,funzione){
+
+
+
+    let dic_risistemato;
+    var res=await chrome.storage.session.get(["myDictionary"]);
+    dic_risistemato= JSON.parse(res.myDictionary)
+
+    if(funzione==1){
+        delete dic_risistemato[id_tab]; 
+    }
+    else{
+        dic_risistemato[id_tab]=video;
+
+    }
+
+   
+
+    var update= await chrome.storage.session.set({"myDictionary": JSON.stringify(dic_risistemato)});
+
+    var res1=await chrome.storage.session.get(["myDictionary"]);
+    dic_risistemato= JSON.parse(res1.myDictionary)
+
+
+   
+}
+
+
+
 
 chrome.runtime.onMessage.addListener((obj, sender, sendResponse)=> { 
 
     if(obj.dst=="bg" && obj.page_id!=undefined){
 
-        let id_str = (obj.page_id).toString();
+        let id_str = (obj.page_id).toString();                              
         
-        //console.log("arrivato un messaggio (gg)");
+      
 
         if(obj.info!=""){
 
-            //console.log("id: ",id_str, "titolo: ",obj.info)
-        
-            //console.log("aggiungo nuovo video");
-            dictionary1[id_str]=obj.info;                          
-            //console.log("dizionario: ",dictionary1);
+            let titolo_video=obj.info;
+            handle_storage(id_str,titolo_video,0);               
+
+            
         }
-
-    }
-
-    if(obj.dst=="lista"){
-        //console.log("arrivata richiesta da popup");
-       //console.log("stato: ",dictionary1);
-
-
-        sendResponse({
-            info: dictionary1
-        });
 
     }
 
@@ -54,19 +117,12 @@ chrome.runtime.onMessage.addListener((obj, sender, sendResponse)=> {
 
 
 
-
-
 chrome.tabs.onUpdated.addListener((tabId, tab) =>{               
 
-    
-  
 
-
-
-    if(tab.url!=undefined && tab.url.match(match_video)){         
+    if(tab.url!=undefined && tab.url.match(match_video)){               
      
 
-        //console.log("cambiata pagina youtube/a youtube quindi mando messaggio:", tabId);
         chrome.tabs.sendMessage(tabId,
 
             {
@@ -79,30 +135,31 @@ chrome.tabs.onUpdated.addListener((tabId, tab) =>{
         );     
     
     }
-    else if(tab.url!=undefined){
+    else if(tab.url!=undefined){        
+
         let id_str = (tabId).toString();
 
-        delete dictionary1[id_str];                                           
+        handle_storage(id_str,"",1);                                   
     
-        console.log("dizionario dopo: ",dictionary1);
+  
 
     }
+
 
 });
 
 chrome.tabs.onRemoved.addListener((tabId, removeInfo)=>{
 
-    //console.log("scheda chiusa elimino entry dizionario");
-    //console.log("dizionario prima: ",dictionary1);
 
     let id_str = (tabId).toString();
 
-    delete dictionary1[id_str];                                              
+    handle_storage(id_str,"",1);                                 
 
-    //console.log("dizionario dopo: ",dictionary1);
 
 
 
 
 });
+
+
         
