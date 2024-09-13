@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "pause_video",
-  "version": "1.0",
-  "description": "window to stop video",
+  "name": "Manage video",
+  "version": "1.2",
+  "description": "Shows a window to manage video",
 
   "background": {
     "service_worker": "background.js"
@@ -16,8 +16,7 @@
     }
   ],
   
-  "host_permissions": ["http://*/*",
-    "https://*/*"],
+  "host_permissions": ["https://www.youtube.com/*"],
 
   "permissions": [
     "storage",
