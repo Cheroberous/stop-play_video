@@ -13,48 +13,158 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+/* html, body {
+  height: 100%;
+  margin: 0;
+} */
+
+
+
+
 
 body {
-    width: 20rem;
+  height: 100%;
+  margin: 0;
+  width: 20rem;
   }
   
-  ul {
-    list-style-type: none;
-    padding-inline-start: 0;
-    margin: 1rem 0;
-  }
+
   
   li {
-    padding: 0.25rem;
+    width: 20rem;
+    width: 100%; 
+    height: 100px;
+    color: white;
+    background-blend-mode: multiply;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position:relative;
   }
-  li:nth-child(odd) {
-    background: #80808030;
-  }
-  li:nth-child(even) {
-    background: #ffffff;
-  }
+  ul {
+    padding-inline-start: 0;
+    list-style-type: none; 
+    margin: 0;
+    padding: 0;
+    width: 100%; 
+    height: 90%; 
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+}
+
+
+
   
-  h3,
+  h1{
+    text-align: center; /* Centered text */
+  }
   p {
     margin: 0;
   }
   
 
+.green{
+  margin-top: 3px;
+
+  font-size: 22px; 
+}
+
+button {
+  width: 40px;
+  height: 30px;
+  display: flex; /* Flexbox to center the icon */
+  align-items: center; /* Vertically center the icon */
+  justify-content: center; /* Horizontally center the icon */
+  background-color: #ffffff00;
+ }
+
+
 .custom-button {
-    background-color: #4CAF50; /* Green background */
-    border: none; /* Remove borders */
-    color: white; /* White text */
-    padding: 10px 21px; /* Some padding */
-    text-align: center; /* Centered text */
-    text-decoration: none; /* Remove underline */
+
+   
+
+    border: none;
+    color: rgb(255, 255, 255); 
+   
     display: inline-block; /* Make the button inline */
-    font-size: 11px; /* Increase font size */
-    margin: 4px 2px; /* Some margin */
+
     cursor: pointer; /* Pointer/hand icon on hover */
-    border-radius: 12px; /* Rounded corners */
     transition: background-color 0.3s ease; /* Smooth transition */
 }
 
+
+
+
 .custom-button:hover {
     background-color: #45a049; /* Darker green on hover */
+}
+
+
+.button-close{
+  background-color: #d42c2c88; 
+  width: 17px;
+  height: 17px;
+  position: absolute;
+  border: none;
+  top: 7px ;
+  right: 7px ;
+
+}
+
+.button-close:hover{
+  background-color: #e22b2b; 
+
+}
+
+
+.red{
+  font-size: 17px; 
+  font-weight:bolder;
+  
+}
+
+.progress{
+  opacity: 0;
+  transition: opacity 1s ease-in-out; /* Smooth transition for fade-in */
+}
+
+.fade-in {
+  opacity: 1; /* Fully visible */
+}
+
+
+input[type="range"] {
+ 
+  cursor:pointer;
+  position: absolute;
+  width: 80%;
+  appearance: none;
+  height: 2px;
+  background: #dddddd80;
+  outline: none;
+  border-radius: 5px;
+  bottom:13% ;
+  left: 10% ;
+} 
+
+input[type="range"]::-webkit-slider-thumb {
+
+
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  
+  background: #10b3ffd5;
+
+
 }
