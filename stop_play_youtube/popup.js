@@ -1,8 +1,7 @@
 
 
-
-
 chrome.storage.onChanged.addListener((changes,areaname)=>{
+
 
 
 
@@ -19,7 +18,6 @@ chrome.storage.onChanged.addListener((changes,areaname)=>{
 
             var st="b"+String(key);
             var st_1="c"+String(key);
-
 
             const element = document.getElementById(st);
             const element1 = document.getElementById(st_1);
@@ -62,11 +60,11 @@ chrome.storage.session.get(["myDictionary"]).then( (result) => {
 
         let i=0;
         for (const [key, value] of Object.entries(dic_risistemato)) {
+       
 
             const stato_bottone=value[2];
 
             stato[key]=stato_bottone
-
 
 
 
@@ -79,6 +77,7 @@ chrome.storage.session.get(["myDictionary"]).then( (result) => {
             newItem.style.backgroundImage = `url(${value[1]})`;
             newItem.style.backgroundSize = 'cover';
             newItem.style.backgroundPosition = 'center';
+            
             newItem.id="c"+key;                                         
                 
             const t = document.createElement('span');
@@ -119,12 +118,11 @@ chrome.storage.session.get(["myDictionary"]).then( (result) => {
 
             icon2.textContent = 'close';
             close.appendChild(icon2);
-
-
-            button.className = key;                                        
+                
+            button.className = key;                                           
             button.id = key;
             f.className = key;      
-            close.id=key;                                    
+            close.id=key;                                  
 
             button.classList.add("custom-button");
             close.classList.add("button-close");
@@ -138,14 +136,14 @@ chrome.storage.session.get(["myDictionary"]).then( (result) => {
                     
                     if (event.target.id.startsWith("c")) {
 
-                        var id_to_send=parseInt(event.target.id.slice(1)); 
+                        var id_to_send=parseInt(event.target.id.slice(1)); // Cuts the first character
 
                         chrome.runtime.sendMessage(
 
                             {
                             dst: "1_bg",
                             info: id_to_send,
-                            action: 2                                                                          
+                            action: 2                                                                         
                             }
                         
                         );
@@ -182,10 +180,12 @@ chrome.storage.session.get(["myDictionary"]).then( (result) => {
 
 
             button.onclick = function() {
+                        //console.log("premuto pausa");
                 update_play_pause(button.className);
                 handleClick(button.id,button);
             };
             f.onclick = function() {
+                        //console.log("premuto avanti");
                 handleClick1(button.id,0);
             };
             close.onclick = function() {
@@ -193,7 +193,7 @@ chrome.storage.session.get(["myDictionary"]).then( (result) => {
             };
                    
 
-
+               
             newItem.appendChild(t);
             newItem.appendChild(button);
             newItem.appendChild(f);
@@ -219,11 +219,11 @@ chrome.storage.session.get(["myDictionary"]).then( (result) => {
                             
                 }, (response)=>{
 
+                 
 
                     var max=response.max;
                     var curr=response.cur;
 
-                    // CREO ELEMENTO TIME BAR PER SINGOLO VIDEO
 
                     const p_g=document.createElement("input");
                     p_g.id="a"+key;
@@ -240,7 +240,7 @@ chrome.storage.session.get(["myDictionary"]).then( (result) => {
                     }
                     p_g.setAttribute('step', '1');
 
-                    list_item.appendChild(p_g);                                              
+                    list_item.appendChild(p_g);                                               
 
                     p_g.offsetHeight;
 
@@ -254,6 +254,7 @@ chrome.storage.session.get(["myDictionary"]).then( (result) => {
 
                     p_g.addEventListener('change', (event) => {
                         const element = event.target;
+                      
 
                         var t=element.id.substring(1);
                         var t1= parseInt(t);
@@ -301,7 +302,7 @@ function startTimer() {
 
 
 
-function update_p_g(){                                       
+function update_p_g(){                                     
     const e_class="progress";
 
     for (let key in stato) {
@@ -332,7 +333,8 @@ function update_p_g(){
 }
 
 
-function handleClick(id_tab,bottone_interessato,msg){                                    
+function handleClick(id_tab,bottone_interessato,msg){                                  
+
    
     const play_n=stato[id_tab];
 
@@ -351,7 +353,7 @@ function handleClick(id_tab,bottone_interessato,msg){
     var id_num= parseInt(id_tab);
   
         
-     
+    
 
 
     chrome.tabs.sendMessage(id_num,
@@ -368,12 +370,12 @@ function handleClick(id_tab,bottone_interessato,msg){
  
     }
 
-    function handleClick1(id_tab,action){                                     
+    function handleClick1(id_tab,action){                                      
             
         var id_num= parseInt(id_tab);
         let stringa;
- 
-        if(action==0){                                                                                         
+        
+        if(action==0){                                                                                        
             stringa="f";
             chrome.tabs.sendMessage(id_num,
             
@@ -400,7 +402,7 @@ function handleClick(id_tab,bottone_interessato,msg){
                 {
                 dst: "1_bg",
                 info: id_num,
-                action: 0                                                                           
+                action: 0                                                                    
                 }
             
             );
@@ -410,7 +412,6 @@ function handleClick(id_tab,bottone_interessato,msg){
     
            
         }
-
 
 
 
@@ -424,7 +425,7 @@ async function update_play_pause(id_tab_n){
             {
             dst: "1_bg",
             info: id_num,
-            action: 1                  
+            action: 1                 
             }
         
         );
