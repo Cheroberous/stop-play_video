@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "pause_video",
-  "version": "1.3.2",
-  "description": "window to stop video",
+  "name": "Manage_video",
+  "version": "1.4.0",
+  "description": "Manage videos from everywhere",
 
   "background": {
     "service_worker": "background.js"
