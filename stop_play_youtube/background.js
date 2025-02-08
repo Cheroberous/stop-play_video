@@ -1,11 +1,8 @@
 
 
-
-
 const match_video="https:\/\/www\.youtube\.com\/watch[a-zA-Z0-9]*";          
 var attiva="";
-const debug=0;
-
+const debug=1;
 
 var dictionary1={};
 
@@ -48,9 +45,6 @@ chrome.storage.session.get(null, function(items) {
 
 
 
-
-
-
 async function handle_storage(id_tab,video,thumbnail,funzione){
 
 
@@ -63,27 +57,31 @@ async function handle_storage(id_tab,video,thumbnail,funzione){
         delete dic_risistemato[id_tab]; 
     }
     else if(funzione==0){
-        dic_risistemato[id_tab]=[video];                               //no parentesi
+        dic_risistemato[id_tab]=[video];                               
         dic_risistemato[id_tab].push(thumbnail);
         dic_risistemato[id_tab].push(1);
         
 
     }
     else if(funzione==2){
-        var p=dic_risistemato[id_tab][2];
-        if(p==0){
-            dic_risistemato[id_tab][2]=1;
-        }
-        else{
-            dic_risistemato[id_tab][2]=0;
+
+        if(dic_risistemato[id_tab][2]!=undefined){                
+            var p=dic_risistemato[id_tab][2];
+            if(p==0){
+                dic_risistemato[id_tab][2]=1;
+            }
+            else{
+                dic_risistemato[id_tab][2]=0;
+            }
         }
     }
 
    
 
+
+
     var update= await chrome.storage.session.set({"myDictionary": JSON.stringify(dic_risistemato)});
 
-  
 
 
    
@@ -91,19 +89,19 @@ async function handle_storage(id_tab,video,thumbnail,funzione){
 
 
 
+
 chrome.runtime.onMessage.addListener((obj, sender, sendResponse)=> { 
 
     if(obj.dst=="bg" && obj.page_id!=undefined){
 
-        let id_str = (obj.page_id).toString();                              
+        let id_str = (obj.page_id).toString();                           
         
 
         if(obj.info!=""){
 
             let titolo_video=obj.info;
             let thumbnail=obj.background;
-
-            handle_storage(id_str,titolo_video,thumbnail,0);                
+            handle_storage(id_str,titolo_video,thumbnail,0);             
 
             
         }
@@ -135,7 +133,7 @@ chrome.runtime.onMessage.addListener((obj, sender, sendResponse)=> {
                 highlighted: true
 
             });
-        }                                        
+        }                                         
 
         else if (obj.action==3){
 
@@ -166,8 +164,6 @@ chrome.runtime.onMessage.addListener((obj, sender, sendResponse)=> {
 
 
 chrome.tabs.onUpdated.addListener((tabId, tab) =>{               
-
-    
 
 
     const url_tab=tab.url;   
@@ -214,7 +210,7 @@ chrome.tabs.onRemoved.addListener((tabId, removeInfo)=>{
 
 
     let id_str = (tabId).toString();
-    handle_storage(id_str,"","",1);                                    
+    handle_storage(id_str,"","",1);                                  
 
 
 
